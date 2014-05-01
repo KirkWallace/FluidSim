@@ -41,29 +41,49 @@
 #ifndef MACGRID_H_
 #define MACGRID_H_
 
+#include <vector>
 #include <iostream>
+
+
+
+
 using namespace std;
 
 class MACgrid{
 
 private:
-	static int nx, ny, nz;
-	double ***pressure;
-//	int u[nx+1][ny][nz];
-//	int v[nx][ny+1][nz];
-//	int w[nx][ny][nz+1];
+
+	double time; //time kept in sec from instantiation
+	double tframe; //24 frames a second
+
+	//void initGrid();
+
+public:
+	//must define simulation size prior to compilation
+	static const int nx = 10;
+	static const int ny = 15;
+	static const int nz = 20;
+
+	double pressure[nx][ny][nz], temp[nx][ny][nz], quantity[nx][ny][nz],
+	u[nx+1][ny][nz],v[nx][ny+1][nz],w[nx][ny][nz+1];
 
 	MACgrid();
-public:
-	MACgrid(int nx, int ny, int nz);
 	virtual ~MACgrid();
 
-	void setDim(int nx, int ny, int nz);//sets the dimensions for the grid
-	void initGrid(double &data);
-	void printDim();
+	//grid access methods
+	void printDim(){cout<<"Grid Dimensions"<<endl<<"x: "<<nx<<" y: "<<ny<<" z: "<<nz<<endl;}
+	void fill(double val, char var); //fills every entry in the grid with val
+	void fill(double val, char var, int i, int j, int k); //puts val at the index (i,j,k)
+
+	//Time methods
+	double getTime() {return time;}
+	void incrementTime(){incrementTime(tframe);}
+	void incrementTime(double sec) {time+=sec;}
+
+	double getGridValue(int x, int y, int z){return pressure[x][y][z];}
 
 	//getters
-	int getDim(char a);
+	int getDim(char a); //returns the size of the x(u), y(v), z(w) dimensions of the grid
 
 };
 

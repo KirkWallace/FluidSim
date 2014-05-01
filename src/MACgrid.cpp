@@ -39,56 +39,81 @@
  */
 
 #include "..\inc\MACgrid.h"
+#include <cstdio>
 
-MACgrid::MACgrid(){
-	MACgrid(1,1,1);
+MACgrid::MACgrid():time(0),tframe(1.0/24.0)
+{
+	fill(0.0,'t');
+	fill(0.0,'p');
+	fill(0.0,'q');
 }
 
-MACgrid::MACgrid(int nx, int ny, int nz){
-	setDim(nx, ny, nz);
-}
 MACgrid::~MACgrid(){}
 
-void MACgrid::setDim(int nx, int ny, int nz){
-	this->nx = nx;
-	this->ny=ny;
-	this->nz=nz;
-	const int x =nx;
-	const int y =ny;
-	const int z =nz;
-	pressure = new double[x][y][z];
+
+void MACgrid::fill(double val, char var){
+	if(var=='p') {
+		for(int i=0; i<nx; i++){
+			for(int j=0;j<ny;j++){
+				for(int k=0; k<nz;k++){
+					pressure[i][j][k] = val;
+				}
+			}
+		}
+	}
+	else if(var=='t') {
+		for(int i=0; i<nx; i++){
+			for(int j=0;j<ny;j++){
+				for(int k=0; k<nz;k++){
+					temp[i][j][k] = val;
+				}
+			}
+		}
+	}
+	else if(var=='q') {
+			for(int i=0; i<nx; i++){
+				for(int j=0;j<ny;j++){
+					for(int k=0; k<nz;k++){
+						quantity[i][j][k] = val;
+					}
+				}
+			}
+	}
+	else
+	{
+		cout<<"Please use a character for the dimension call to fill(double,char)"<<
+				" -ie: fill(1.0,'x') to put 1 in the x dimension"<<endl;
+	}
 }
 
-void MACgrid::printDim(){
-	cout<<"grid dimensions"<<endl;
-	cout<<"x: "<<nx<<" y: "<<ny<<" z: "<<nz<<endl;
+void MACgrid::fill(double val, char var, int i, int j, int k){
+	if(var=='p') {
+					pressure[i][j][k] = val;
+	}
+	else if(var=='t') {
+					temp[i][j][k] = val;
+	}
+	else if(var=='q') {
+					quantity[i][j][k] = val;
+	}
+	else
+	{
+		cout<<"Please use a character for the dimension call to fill(double,char)"<<
+				" -ie: fill(1.0,'x') to put 1 in the x dimension"<<endl;
+	}
 }
+
 
 int MACgrid::getDim(char a){
-	if(a =='x') return nx;
-	else if(a =='y') return ny;
-	else if(a =='z') return nz;
+	if(a =='x'||a =='u') return nx;
+	else if(a =='y'||a =='v') return ny;
+	else if(a =='z'||a =='w') return nz;
 	else{
 		cout<<"please use an x,y,z with getDim to refer to the dimension you want. "<<
 			endl<<"Input recieved was "<<a<<endl;
 		return 0;
 	}
 }
-void MACgrid::initGrid(double &du, double &dv, double &dw){
-	int j = 0;
-	int k = 0;
-	for(int i=0;i<(grid->getDim('x'));i++){
-		j=0;
-		k=0;
-		pressure[i][j][k] = du[i];
-		for(int j=0;j<grid->getDim('y');j++){
-			k=0;
-			pressure[i][j][k] = dv[j];
-			for(int k=0;k<grid->getDim('z');k++){
-				pressure[i][j][k] = dw[k];
-			}
-		}
-	}
 
 
-}
+
