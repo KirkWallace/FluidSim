@@ -1,29 +1,29 @@
-﻿Build started 7/21/2014 5:44:55 PM.
-     1>Project "C:\Users\Wallace\Documents\Visual Studio 2013\Projects\FluidSimGit\FluidSim\FluidSim.vcxproj" on node 2 (Build target(s)).
+﻿Build started 7/26/2014 2:24:21 AM.
+     1>Project "C:\Users\Wallace\Documents\Visual Studio 2013\Projects\FluidSim\FluidSim\FluidSim.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt MACgrid.cpp main.cpp MathLib.cpp
-         MathLib.cpp
-     1>c:\users\wallace\documents\visual studio 2013\projects\fluidsimgit\fluidsim\macgrid.h(178): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
-         main.cpp
-     1>c:\users\wallace\documents\visual studio 2013\projects\fluidsimgit\fluidsim\macgrid.h(178): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt MACgrid.cpp MathLib.cpp main.cpp
          MACgrid.cpp
-     1>c:\users\wallace\documents\visual studio 2013\projects\fluidsimgit\fluidsim\macgrid.h(178): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
-     1>c:\users\wallace\documents\visual studio 2013\projects\fluidsimgit\fluidsim\macgrid.cpp(53): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wallace\documents\visual studio 2013\projects\fluidsimgit\fluidsim\macgrid.cpp(54): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wallace\documents\visual studio 2013\projects\fluidsimgit\fluidsim\macgrid.cpp(55): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\wallace\documents\visual studio 2013\projects\fluidsimgit\fluidsim\macgrid.cpp(65): warning C4156: deletion of an array expression without using the array form of 'delete'; array form substituted
-     1>c:\users\wallace\documents\visual studio 2013\projects\fluidsimgit\fluidsim\macgrid.cpp(65): warning C4154: deletion of an array expression; conversion to pointer supplied
-     1>c:\users\wallace\documents\visual studio 2013\projects\fluidsimgit\fluidsim\macgrid.cpp(97): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
-     1>c:\users\wallace\documents\visual studio 2013\projects\fluidsimgit\fluidsim\macgrid.cpp(336): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>c:\users\wallace\documents\visual studio 2013\projects\fluidsim\fluidsim\macgrid.h(183): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>c:\users\wallace\documents\visual studio 2013\projects\fluidsim\fluidsim\macgrid.cpp(53): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\wallace\documents\visual studio 2013\projects\fluidsim\fluidsim\macgrid.cpp(54): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\wallace\documents\visual studio 2013\projects\fluidsim\fluidsim\macgrid.cpp(55): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\wallace\documents\visual studio 2013\projects\fluidsim\fluidsim\macgrid.cpp(65): warning C4156: deletion of an array expression without using the array form of 'delete'; array form substituted
+     1>c:\users\wallace\documents\visual studio 2013\projects\fluidsim\fluidsim\macgrid.cpp(65): warning C4154: deletion of an array expression; conversion to pointer supplied
+     1>c:\users\wallace\documents\visual studio 2013\projects\fluidsim\fluidsim\macgrid.cpp(95): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>c:\users\wallace\documents\visual studio 2013\projects\fluidsim\fluidsim\macgrid.cpp(334): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>c:\users\wallace\documents\visual studio 2013\projects\fluidsim\fluidsim\macgrid.cpp(605): error C2660: 'MACgrid::max' : function does not take 2 arguments
+     1>c:\users\wallace\documents\visual studio 2013\projects\fluidsim\fluidsim\macgrid.cpp(605): fatal error C1903: unable to recover from previous error(s); stopping compilation
          Generating Code...
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Wallace\Documents\Visual Studio 2013\Projects\FluidSimGit\Debug\FluidSim.exe" /INCREMENTAL /NOLOGO opengl32.lib glu32.lib freeglut.lib glew32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Wallace\Documents\Visual Studio 2013\Projects\FluidSimGit\Debug\FluidSim.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Wallace\Documents\Visual Studio 2013\Projects\FluidSimGit\Debug\FluidSim.lib" /MACHINE:X86 Debug\MACgrid.obj
-         Debug\main.obj
-         Debug\MathLib.obj
-         LINK : C:\Users\Wallace\Documents\Visual Studio 2013\Projects\FluidSimGit\Debug\FluidSim.exe not found or not built by the last incremental link; performing full link
-         FluidSim.vcxproj -> C:\Users\Wallace\Documents\Visual Studio 2013\Projects\FluidSimGit\Debug\FluidSim.exe
-     1>Done Building Project "C:\Users\Wallace\Documents\Visual Studio 2013\Projects\FluidSimGit\FluidSim\FluidSim.vcxproj" (Build target(s)).
+         Compiling...
+         MathLib.cpp
+     1>c:\users\wallace\documents\visual studio 2013\projects\fluidsim\fluidsim\macgrid.h(183): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+         Generating Code...
+         Compiling...
+         main.cpp
+     1>c:\users\wallace\documents\visual studio 2013\projects\fluidsim\fluidsim\macgrid.h(183): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+         Generating Code...
+     1>Done Building Project "C:\Users\Wallace\Documents\Visual Studio 2013\Projects\FluidSim\FluidSim\FluidSim.vcxproj" (Build target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-Time Elapsed 00:00:01.59
+Time Elapsed 00:00:01.69

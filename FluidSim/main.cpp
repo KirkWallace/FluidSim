@@ -1,42 +1,12 @@
 #include "main.h"
 #include "MACgrid.h"
-#include <iostream>
-#include <string>
+#include "rendering.h"
+
 
 //using namespace gridDef;
 //using namespace MathLib;
-
-const int WIDTH = 600;
-const int HEIGHT = 700;
-
-//OpenGL methods
-void initRendering() {
-	glClearColor(0, .5, 1, 1);
-}
-
-void Display() {
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glColor3f(1, 1, 1);
-
-	glBegin(GL_LINES);
-	glVertex3f(0, 0, -5);
-	glVertex3f(2, 2, -5);
-	glVertex3f(4, 0, -5);
-	glEnd();
-
-	glutSwapBuffers();
-}
-
-void Reshape(int w, int h) {
-	glViewport(0, 0, w, h);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(45.0, (GLdouble)w / (GLdouble)h, 1.0, 200.0);
-}
-
+using namespace rendering;
+using namespace std;
 
 int main(int argc, char *argv[]) {
 
@@ -46,6 +16,11 @@ int main(int argc, char *argv[]) {
 	grid->fill(11, 1, 5);
 	int count0 = 0;
 	int count1 = 0;
+	double h[] = { 1, 2, 3, 4 ,5};
+	double j[] = { 1, 2, 30, 4 ,5};
+
+	std::cout << "the dot product is " << dot_product(*h, *j , sizeof(h)/sizeof(h[0])) << std::endl;
+	std::cout << "the max is " << max_m(*j, sizeof(j) / sizeof(j[0])) << endl;
 	/*
 	for (int i = 0; i<grid->nx; i++){
 		for (int j = 0; j<grid->ny; j++){
@@ -62,58 +37,23 @@ int main(int argc, char *argv[]) {
 	getline(cin, a);
 
 
-
+	grid->PCG(); 
+	
+	vector<double> pressureStore = grid->p;
+	int i = 0;
+	for (auto it = pressureStore.begin(); it < pressureStore.end(); ++it)
+		cout << "p[" << i++ << "] = " << *it << endl;
+		*/
 	/* Glut setup function calls */
-	/*
-	//STEP 1: Initialize GLUT 
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH );
-	//glutInitWindowPosition(100,100);
-	glutInitWindowSize(400, 400);
-	//STEP 2: Create windows
-	glutCreateWindow("Hello OpenGL");
-	initRendering();
-	//STEP 3: Handlers functions
-	glutDisplayFunc(Display);
-	glutReshapeFunc(Reshape);
-	//STEP 4: Main loop
-	glutMainLoop();
-	*/
-	//Tutorial 1 - draw a triangle 
-	const GLfloat g_vertex_buffer_data[] = {
-		-1.0f, -1.0f, 0.0f,
-		1.0f, -1.0f, 0.0f,
-		0.0f, 1.0f, 0.0f
-	};
-	/*
-	GLuint vertexBuffer;
-	glGenBuffers(1, &vertexBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+	drawSnowMenTut(argc, argv);
 
-	// 1rst attribute buffer : vertices
-	glEnableVertexAttribArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glVertexAttribPointer(
-		0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
-		3,                  // size
-		GL_FLOAT,           // type
-		GL_FALSE,           // normalized?
-		0,                  // stride
-		(void*)0            // array buffer offset
-		);
-
-	// Draw the triangle !
-	glDrawArrays(GL_TRIANGLES, 0, 3); // Starting from vertex 0; 3 vertices total -> 1 triangle
-
-	glDisableVertexAttribArray(0);
 	
-	glutMainLoop();
-	
-	*/
-	
-	return 0;
+	return 1;
 }
+
+
+
+
 
 
 

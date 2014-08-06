@@ -3,6 +3,37 @@
 namespace MathLib 
 {
 
+	double dot_product(double &a, double &b, int size){
+		double dotted = 0;
+			for (int i = 0; i < size; i++)
+					dotted += (&a)[i] * (&b)[i];
+		return dotted;
+	}
+
+	double MathLib::max_m(double &fillArray, int size){
+		double maxV = 0; //max Value
+		if (size>0) maxV = (&fillArray)[0];
+		else std::cout << "ERROR: please make sure max called on an array of length greater than 0" <<std::endl;
+
+		for (int i = 0; i < size; i++){
+			if ((&fillArray)[i] >= maxV) maxV = (&fillArray)[i];
+		}
+		
+		return maxV;
+	}
+
+
+	class Math_Vec{
+			
+		Math_Vec(vector<double> math_init){
+				for (std::vector<int>::iterator it = math_init.begin(); it != math_init.end(); ++it)
+					data.push_back(it);
+			}
+		Math_Vec Math_Vec::operator=(const Math_Vec& other){
+		
+		};
+
+	};
 		///////Math methods///////////////
 
 	//int math_nx = 10;

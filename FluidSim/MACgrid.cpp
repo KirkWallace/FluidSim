@@ -63,8 +63,6 @@ MACgrid::MACgrid() :gridTime(0), tframe(1.0 / 24.0)
 MACgrid::~MACgrid(){ 
 	if (pressure||temp||quantity||u||v||w)
 		delete pressure,temp,quantity,u,v,w;
-
-
 }
 
 //setup
@@ -573,7 +571,58 @@ void MACgrid::project(double delT, int velocityField){
 		}
 	}
 
+}
+/*
+vector<double> MACgrid::PCG(){
+	
+	 p.assign (4, 0.0); //all of the pressure unknowns for the pressure solve Ap=d
+	 b.assign (4, 1.0); //all of the pressure unknowns for the pressure solve Ap=d
+	std::vector<double>::iterator it;
+	p.assign(b.begin(),b.end());
 
+	return p;
+}
+vector<double> MACgrid::applyA(vector<double> s){
+return s;
+}
+
+vector<double> MACgrid::applyPreconditioner(vector<double> r){
+return r;
+}
+*/
+double* MACgrid::PCG(){
+	int iterlimit = 100;
+	double tol = .0000001; // units [s^-1]
+	int count = 0;
+	for (int i = 0; i < 6; i++){
+		p[i] = 0;
+		b[i] = 0;
+		r[i] = 0;
+		s[i] = 0;
+		z[i] = 0;
+	}
+	
+	double a[] = {1.2, 2.3};
+
+	while (count<iterlimit && max_m(*r, sizeof(r) / sizeof(r[0])) >= tol){
+		z = applyA(s);
+
+
+	}
+
+
+
+
+
+	return a;
+}
+double* MACgrid::applyA(double* s){
+
+	return p;
+}
+
+double* MACgrid::applyPreconditioner(double* r){
+	return p;
 }
 
 void MACgrid::advect(int fieldProperty){

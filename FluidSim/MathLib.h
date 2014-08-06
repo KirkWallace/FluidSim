@@ -6,6 +6,22 @@
 namespace MathLib
 {
 
+	
+	//template argument deduction
+	
+	double dot_product(double &a, double &b, int size);
+	double max_m(double &fillArray, int size);
+
+	class Math_Vec{
+	private:
+
+	public:
+		vector<double> data;
+		Math_Vec(vector<double> math_init);
+		Math_Vec operator=(const Math_Vec& other);
+	
+	}
+	
 	//int math_nx = 10;
 	//int math_ny = 10;
 	//int math_nz = 5;

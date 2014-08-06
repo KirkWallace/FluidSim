@@ -74,10 +74,17 @@ using namespace gridDef;
 		const double cellWidth = 1.0;  //width of one grid cell in mm
 		double dx = cellWidth / 20.0; //stores the distance traveled in each step of the discretization
 		double rho = 1.0; //g/cm^3 ;density - defaults to the density of water
-
-
 	public:
 
+		double p[6]; ///I have no idea how big these need to be, but I need to move on.
+		double b[6];
+		double r[6];
+		double s[6];
+		double z[6];
+		double sigma, sigmaNew; //used in the Pressure Update
+
+	//	vector<double> p; //all of the pressure unknowns for the pressure solve Ap=d
+	//	vector<double> b; //all of the pressure unknowns for the pressure solve Ap=d
 
 		//build a 3D pointer so we don't have to do insane logic flow and or pass an array around
 		//for points in the centers of the MAC grid
@@ -186,6 +193,14 @@ using namespace gridDef;
 		double usolid(int i, int j, int k);
 		double vsolid(int i, int j, int k);
 		double wsolid(int i, int j, int k);
+		//vector<double> PCG();
+		//vector<double> applyA(vector<double> s);
+		//vector<double> applyPreconditioner(vector<double> r);
+
+		double* PCG();
+		double* applyA(double* s);
+		double* applyPreconditioner(double* r);
+
 		void advect(int fieldProperty);
 
 
