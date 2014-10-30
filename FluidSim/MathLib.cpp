@@ -2,7 +2,47 @@
 
 namespace MathLib 
 {
+	
+	double dot_product(double* a, double* b, int size){
+		double dotted = 0;
+		for (int i = 0; i < size; i++)
+			dotted += (*a++) * (*b++);
+		return dotted;
+	}
 
+	double MathLib::max_m(double* fill_p, int size){
+		double maxV = 0; //max Value
+		if (size>0) maxV = *fill_p;
+		else std::cout << "ERROR: please make sure max called on an array of length greater than 0" << std::endl;
+
+		for (int i = 0; i < size-1; i++){
+			++fill_p;
+			if (*fill_p >= maxV) maxV = *fill_p;
+		}
+
+		return maxV;
+	}
+
+	void multiply(double* vector, double scale,int size){
+		for (int i = 0; i < size; i++)
+			*vector++ = (*vector) * scale;
+	}
+	void add(double* a, double* b, int size){ //adds b into a
+		for (int i = 0; i < size; i++)
+			*a++ = (*a) + (*b);
+	}
+	void update_pres_res(double* a, double* b, double scale, int size){
+		//update vectors using equation, a = a + scale * b; 
+		//used for pressure, residual vector update
+		for (int i = 0; i < size; i++)
+			*a++ = (*a) + scale * (*b);
+	}
+	void update_search(double* s, double* z, double beta, int size){
+		for (int i = 0; i < size; i++)
+			*s++ = (*z) + beta * (*s);
+	}
+
+	/* Old way of doing it with C primative arrays
 	double dot_product(double &a, double &b, int size){
 		double dotted = 0;
 			for (int i = 0; i < size; i++)
@@ -21,8 +61,9 @@ namespace MathLib
 		
 		return maxV;
 	}
+	*/
 
-
+	/*
 	class Math_Vec{
 			
 		Math_Vec(vector<double> math_init){
@@ -33,7 +74,8 @@ namespace MathLib
 		
 		};
 
-	};
+	}
+	*/
 		///////Math methods///////////////
 
 	//int math_nx = 10;

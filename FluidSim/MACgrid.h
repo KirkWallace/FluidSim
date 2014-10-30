@@ -43,8 +43,8 @@
 
 
 
-#ifndef MACGRID_H_
-#define MACGRID_H_
+//#ifndef MACGRID_H_
+//#define MACGRID_H_
 
 #include <vector>
 #include <iostream>
@@ -67,24 +67,30 @@ using namespace gridDef;
 
 
 	private:
-
+		
 		double gridTime; //time kept in seconds from instantiation
 		double tframe; //24 frames a second
-		double dt = tframe; //stores the upper limit of time we should iterate the simulation with
+//		double dt = tframe; //stores the upper limit of time we should iterate the simulation with
 		const double cellWidth = 1.0;  //width of one grid cell in mm
+//		double dx = cellWidth / 20.0; //stores the distance traveled in each step of the discretization
+//		double rho = 1.0; //g/cm^3 ;density - defaults to the density of water
+	public:
+		double dt = tframe; //stores the upper limit of time we should iterate the simulation with
 		double dx = cellWidth / 20.0; //stores the distance traveled in each step of the discretization
 		double rho = 1.0; //g/cm^3 ;density - defaults to the density of water
-	public:
-
-		double p[6]; ///I have no idea how big these need to be, but I need to move on.
-		double b[6];
-		double r[6];
-		double s[6];
-		double z[6];
+		double alpha = 0.0; //pressure update scale
+	//	double p[6]; ///I have no idea how big these need to be, but I need to move on.
+	//	double b[6];
+	//	double r[6];
+	//	double s[6];
+	//	double z[6];
 		double sigma, sigmaNew; //used in the Pressure Update
 
-	//	vector<double> p; //all of the pressure unknowns for the pressure solve Ap=d
-	//	vector<double> b; //all of the pressure unknowns for the pressure solve Ap=d
+		vector<double> p; //all of the pressure unknowns for the pressure solve Ap=d
+		vector<double> b; //all of the pressure unknowns for the pressure solve Ap=d
+		vector<double> r; 
+		vector<double> s; 
+		vector<double> z; 
 
 		//build a 3D pointer so we don't have to do insane logic flow and or pass an array around
 		//for points in the centers of the MAC grid
@@ -143,11 +149,18 @@ using namespace gridDef;
 		double v[nx][ny + 1][nz]; //v component of the velocity field at the grid FACES
 		double w[nx][ny][nz + 1]; //w component of the velocity field at the grid FACES
 		double rhs[nx][ny][nz];   //stores the right hand side (rhs) of the linear system for the pressure update
+		
 		double Adiag[nx + 1][ny + 1][nz + 1]; //diagonal entries of the A pressure matrix
 		double Aplusi[nx][ny][nz]; //storing of the positive neighbor entries of the A pressure matrix, negative values obtained from symmetry
 		double Aplusj[nx][ny][nz]; //storing of the positive neighbor entries of the A pressure matrix, negative values obtained from symmetry
 		double Aplusk[nx][ny][nz]; //storing of the positive neighbor entries of the A pressure matrix, negative values obtained from symmetry
-
+		
+		/*
+		vector<double> Adiag[nx + 1][ny + 1][nz + 1]; //diagonal entries of the A pressure matrix
+		vector<double> Aplusi[nx][ny][nz]; //storing of the positive neighbor entries of the A pressure matrix, negative values obtained from symmetry
+		vector<double> Aplusj[nx][ny][nz]; //storing of the positive neighbor entries of the A pressure matrix, negative values obtained from symmetry
+		vector<double> Aplusk[nx][ny][nz]; //storing of the positive neighbor entries of the A pressure matrix, negative values obtained from symmetry
+		*/
 		int cell[nx][ny][nz]; //to be filled with cellTypes
 
 		MACgrid();
@@ -193,15 +206,16 @@ using namespace gridDef;
 		double usolid(int i, int j, int k);
 		double vsolid(int i, int j, int k);
 		double wsolid(int i, int j, int k);
-		//vector<double> PCG();
-		//vector<double> applyA(vector<double> s);
-		//vector<double> applyPreconditioner(vector<double> r);
+		vector<double> PCG();
+		vector<double> applyA(vector<double> s);
+		vector<double> applyPreconditioner(vector<double> r);
 
-		double* PCG();
-		double* applyA(double* s);
-		double* applyPreconditioner(double* r);
+		//double* PCG();
+		//double* applyA(double* s);
+		//double* applyPreconditioner(double* r);
 
 		void advect(int fieldProperty);
+		double interpolate(double quantn, vector<double> xp);
 
 
 	};
@@ -214,4 +228,4 @@ using namespace gridDef;
 
 
 
-#endif /* MACGRID_H_ */
+//#endif /* MACGRID_H_ */

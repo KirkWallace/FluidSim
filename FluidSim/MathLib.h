@@ -1,7 +1,10 @@
 
 
-
-#include "MACgrid.h"
+#include <vector>
+#include <iostream>
+#include <cstdio>
+#include <ctime>
+//#include "MACgrid.h"
 
 namespace MathLib
 {
@@ -9,9 +12,13 @@ namespace MathLib
 	
 	//template argument deduction
 	
-	double dot_product(double &a, double &b, int size);
-	double max_m(double &fillArray, int size);
-
+	double dot_product(double* a, double*b, int size);
+	double max_m(double* fillArray, int size);
+	void multiply(double* vector, double scale, int size);
+	void add(double* a, double* b, int size);
+	void update_pres_res(double* a, double* b, double scale, int size);
+	void update_search(double* s, double* z, double beta, int size);
+	/*
 	class Math_Vec{
 	private:
 
@@ -21,7 +28,7 @@ namespace MathLib
 		Math_Vec operator=(const Math_Vec& other);
 	
 	}
-	
+	*/
 	//int math_nx = 10;
 	//int math_ny = 10;
 	//int math_nz = 5;

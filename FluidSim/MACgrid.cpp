@@ -53,6 +53,7 @@ MACgrid::MACgrid() :gridTime(0), tframe(1.0 / 24.0)
 	fill(TEMP, 1.0);
 	fill(PRES, 0.0);
 	fill(QUAN, 0.0);
+	dt = tframe;
 
 	cout << "cell fill TEMP: " << cellFillGood(TEMP) << endl;
 	cout << "cell fill PRES: " << cellFillGood(PRES) << endl;
@@ -194,6 +195,7 @@ void MACgrid::initVelocityField(int fieldType, double val){
 
 
 }
+
 void MACgrid::initialize()
 {
 	for (int i = 0; i < nx; i++)
@@ -246,7 +248,7 @@ bool MACgrid::cellFillGood(int fillArray){
 			}
 		}
 	}
-	cout << "last cell cecked : [" << a << "][" << b << "][" << c << "]" << endl;
+	cout << "last cell checked : [" << a << "][" << b << "][" << c << "]" << endl;
 
 	return !err;
 	
@@ -573,16 +575,23 @@ void MACgrid::project(double delT, int velocityField){
 
 }
 /*
-vector<double> MACgrid::PCG(){
-	
-	 p.assign (4, 0.0); //all of the pressure unknowns for the pressure solve Ap=d
-	 b.assign (4, 1.0); //all of the pressure unknowns for the pressure solve Ap=d
+double* MACgrid::PCG(){
+    int iterlimit = 100;
+	double tol = .0000001; // units [s^-1]
+	int count = 0;
+		for (int i = 0; i < 6; i++){
+		p[i] = 0;
+		b[i] = 0;
+		r[i] = 0;
+		s[i] = 0;
+		z[i] = 0;
+	}
 	std::vector<double>::iterator it;
 	p.assign(b.begin(),b.end());
 
 	return p;
 }
-vector<double> MACgrid::applyA(vector<double> s){
+double* MACgrid::applyA(double* s){
 return s;
 }
 
@@ -590,45 +599,81 @@ vector<double> MACgrid::applyPreconditioner(vector<double> r){
 return r;
 }
 */
-double* MACgrid::PCG(){
+vector<double> MACgrid::PCG(){
 	int iterlimit = 100;
 	double tol = .0000001; // units [s^-1]
 	int count = 0;
-	for (int i = 0; i < 6; i++){
-		p[i] = 0;
-		b[i] = 0;
-		r[i] = 0;
-		s[i] = 0;
-		z[i] = 0;
+	double beta = 0; //sigma ratio
+	p.assign(6, 0); //set up the initial guess p=0;
+	b.assign(6, 0);
+	r.assign(6, 0);
+	s.assign(6, 0);
+	z.assign(6, 0);
+
+	r = b; //set residual equal to b
+	z = applyPreconditioner(r); //set auxillary vector
+	s = z; //set the search vector equal to initial guess
+
+	sigma = dot_product(z.data(), r.data(),z.size());
+
+	vector<double> a = { 1.2, 2.3 };
+
+	double* sPtr = s.data();
+	double* zPtr = z.data();
+	int tbeforeMeth = 0;
+	int tafterMeth = 0;
+	int tbefore = 0;
+	int tafter = 0;
+
+	while (count<iterlimit && max_m(r.data(), r.size()) >= tol){
+		z = applyA(s); //setting the auxillary vector
+		alpha = sigma / dot_product(z.data(), s.data(),z.size());//alpha = sig/(z.s)
+
+		//update p = p+alpha*s and r = r-alpha*z
+		update_pres_res(p.data(), s.data(), alpha, p.size());
+		update_pres_res(r.data(), z.data(), -alpha, r.size());
+
+		if (max_m(r.data(), r.size()) <= tol) return p;
+		z = applyPreconditioner(r);
+		sigmaNew = dot_product(z.data(),r.data(),z.size());
+		beta = sigmaNew / sigma;
+		tbeforeMeth = time(NULL);
+		update_search(s.data(), z.data(), beta, s.size());//update search vector s=z+s*beta
+		tafterMeth = time(NULL);
+		tbefore = time(NULL);
+		for(int i = 0; i<s.size();i++) *sPtr++ = *zPtr + beta*(*sPtr);
+		tafter = time(NULL);
+		cout << "method took " << tafterMeth - tbeforeMeth << "  while direct took " << tafter - tbefore << endl;
+		sigma = sigmaNew; //update sigma
 	}
 	
-	double a[] = {1.2, 2.3};
-
-	while (count<iterlimit && max_m(*r, sizeof(r) / sizeof(r[0])) >= tol){
-		z = applyA(s);
-
-
-	}
-
-
-
-
-
 	return a;
 }
-double* MACgrid::applyA(double* s){
+vector<double> MACgrid::applyA(vector<double> s){
 
 	return p;
 }
 
-double* MACgrid::applyPreconditioner(double* r){
+vector<double> MACgrid::applyPreconditioner(vector<double> r){
 	return p;
 }
 
+
+//using Semi-Lagrangian method for advection. Meaning we use a lagrangian technique for 
+//following a "particle" to feed the Eulerian volumetric method with a value
 void MACgrid::advect(int fieldProperty){
 
 
 
 }
+
+
+//interpolate returns the next time step n+1 of the quantity q^n; This is where adaptability goes
+double MACgrid::interpolate(double quantn, vector<double> xp){
+
+	return 1.0; //supposed to return the next time step of the quantity quantN
+}
+
+
 
 
